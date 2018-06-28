@@ -3,7 +3,7 @@ import sys
 import os
 
 if len(sys.argv) != 3:
-    print("ERROR: This script requires 2 system arguments.")
+    print("ERROR: This script requires 3 total system arguments.")
     print("FORMAT: python <this_script.py> <src_dir> <dst_dir>")
     sys.exit(1)
 
