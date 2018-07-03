@@ -50,3 +50,4 @@ if src_dir_hash_list == dst_dir_hash_list:
     print("The Src Directory and Dst Directory is IDENTICAL.")
 else:
     print("The Src Directory and Dst Directory is DIFFERENT.")
+
