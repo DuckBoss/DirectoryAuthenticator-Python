@@ -1,6 +1,6 @@
-import hashlib
 import sys
 import os
+import auth_api
 
 BUFFER_SIZE = 65536  # 64kb chunks
 
@@ -22,32 +22,11 @@ if not os.path.isdir(dst_dir):
     sys.exit(1)
 
 
-def file_auth(file_name):
-    md5 = hashlib.md5()
-    with open(file_name, 'rb') as src:
-        while True:
-            data_src = src.read(BUFFER_SIZE)
-            if not data_src:
-                break
-            md5.update(data_src)
-    return md5.hexdigest()
-
-
-def dir_auth(dir_name):
-    hash_list = []
-    for root, dirs, files in os.walk(dir_name, topdown=True):
-        for name in files:
-            file_name = os.path.join(root, name)
-            hash_list.append(file_auth(file_name))
-    return hash_list
-
-
-src_dir_hash_list = dir_auth(src_dir)
-dst_dir_hash_list = dir_auth(dst_dir)
+src_dir_hash_list = auth_api.dir_auth(src_dir, BUFFER_SIZE)
+dst_dir_hash_list = auth_api.dir_auth(dst_dir, BUFFER_SIZE)
 
 
 if src_dir_hash_list == dst_dir_hash_list:
     print("The Src Directory and Dst Directory is IDENTICAL.")
 else:
     print("The Src Directory and Dst Directory is DIFFERENT.")
-
